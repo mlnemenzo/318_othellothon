@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #main_body {
     position: absolute;
     box-sizing: border-box;
@@ -44,3 +45,31 @@
     text-align: center;
 }
 
+=======
+#game-board {
+    height: 500px;
+    width: 500px;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    height: 12.5%;
+}
+
+.square {
+    display: inline-block;
+    height: 100%;
+    width: 12.5%;
+}
+
+.light {
+    background-color: #e4bf7f;
+}
+
+.dark {
+    background-color: #755c30;
+}
+
+
+>>>>>>> 24cbb3582f6894da56a0e601bfdc8a243f47b744
