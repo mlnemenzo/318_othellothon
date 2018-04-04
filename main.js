@@ -4,10 +4,14 @@ function initializeApp(){
     applyClickHandlers();
 
 }
+
 var grid=[];
 var thistokenCoordinate;
 var thistokenRowCoordinate;
 var thistokenColumnCoordinate;
+var player1Check=true;
+var player2Check=false;
+var canBeClicked=true;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -44,10 +48,36 @@ function applyClickHandlers(){
 
 
 function squareClicked(){
-    thistokenRowCoordinate=$(this).parent().attr('row');
-    console.log(thistokenRowCoordinate);
-    thistokenColumnCoordinate=$(this).attr('column');
-    console.log(thistokenColumnCoordinate);
-    thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
-    console.log(thistokenCoordinate);
+    if (!canBeClicked) {
+        return;
+    }
+
+    if ($(this).hasClass('revealed')) {
+        return;
+    }
+    if(player1Check===true&&player2Check===false){
+        thistokenRowCoordinate=$(this).parent().attr('row');
+        thistokenColumnCoordinate=$(this).attr('column');
+        thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
+        $(this).addClass('revealed')
+        $(this).append('<img src="images/Back.png">')
+        console.log(thistokenCoordinate);
+        player1Check=false;
+        player2Check=true;
+        // canBeClicked=false
+        return
+    }
+    if(player2Check===true&&player1Check===false){
+        thistokenRowCoordinate=$(this).parent().attr('row');
+        thistokenColumnCoordinate=$(this).attr('column');
+        thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
+        $(this).addClass('revealed')
+        $(this).append('<img src="images/s-l300.jpg">')
+        console.log(thistokenCoordinate);
+        player2Check=false;
+        player1Check=true;
+        // $("#game-board").off('click',".square",squareClicked);
+        // canBeClicked=false
+        return
+    }
 }
