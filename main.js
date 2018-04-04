@@ -20,11 +20,13 @@ function buildGameBoard(){
             } else{
                 showSquare.addClass("dark")    
             }
-            // showSquare.appendTo(divsToAppend)
+            showSquare.attr('column',newSquare)
             divsToAppend.append(showSquare)
         }
+        divsToAppend.attr('row',newRow)
         $("#game-board").append(divsToAppend)
     }
 
 }
+
 
