@@ -1,0 +1,26 @@
+#game-board {
+    height: 500px;
+    width: 500px;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    height: 12.5%;
+}
+
+.square {
+    display: inline-block;
+    height: 100%;
+    width: 12.5%;
+}
+
+.light {
+    background-color: #e4bf7f;
+}
+
+.dark {
+    background-color: #755c30;
+}
+
+
