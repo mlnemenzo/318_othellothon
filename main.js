@@ -1,8 +1,13 @@
 $(document).ready(initializeApp);
 function initializeApp(){
     buildGameBoard();
-}
+    applyClickHandlers();
 
+}
+var grid=[];
+var thistokenCoordinate;
+var thistokenRowCoordinate;
+var thistokenColumnCoordinate;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -22,11 +27,27 @@ function buildGameBoard(){
             }
             showSquare.attr('column',newSquare)
             divsToAppend.append(showSquare)
+            grid.push(newRow+","+newSquare)
+
         }
         divsToAppend.attr('row',newRow)
+        console.log(grid)
         $("#game-board").append(divsToAppend)
     }
 
 }
 
 
+function applyClickHandlers(){
+    $("#game-board").on('click',".square",squareClicked);
+}
+
+
+function squareClicked(){
+    thistokenRowCoordinate=$(this).parent().attr('row');
+    console.log(thistokenRowCoordinate);
+    thistokenColumnCoordinate=$(this).attr('column');
+    console.log(thistokenColumnCoordinate);
+    thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
+    console.log(thistokenCoordinate);
+}
