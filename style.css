@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #main_body {
     position: absolute;
     box-sizing: border-box;
@@ -45,22 +45,31 @@
     text-align: center;
 }
 
-=======
+
+
 #game-board {
-    height: 500px;
-    width: 500px;
-    margin: auto;
+    position: relative;
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 80%;
+    width: 65%;
+}
+
+#game-board > div {
+
 }
 
 .row {
     display: flex;
-    height: 12.5%;
+    height: 11.5%;
+    width: 100%;
 }
 
 .square {
     display: inline-block;
     height: 100%;
-    width: 12.5%;
+    width: 8.5%;
 }
 
 .light {
@@ -72,4 +81,4 @@
 }
 
 
->>>>>>> 24cbb3582f6894da56a0e601bfdc8a243f47b744
+
