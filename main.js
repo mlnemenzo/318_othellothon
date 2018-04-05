@@ -209,13 +209,19 @@ function doMath() {
     //function to check the distance of opposite source tokens comapred to what was clicked
     var InnerRowPositionCheck;
     var InnerColPositionCheck;
-    sortRowArray=[]
+    sortRowArray=[];
+    sortColArray=[];
+    var incrementCol='';
+
     for (var p=0; p<tokenPop.length;p++){
         InnerRowPositionCheck=tokenPop[p].charAt(0);
         InnerColPositionCheck=tokenPop[p].charAt(2);
         if(InnerColPositionCheck===thistokenCoordinate.charAt(2)){
             sortRowArray.push(tokenPop[p])
             sortRowArray.sort()
+        }else if(InnerRowPositionCheck===thistokenCoordinate.charAt(0)){
+            sortColArray.push(tokenPop[p])
+            sortColArray.sort()
         }
     }
     for (i = 0; i < oppositeSourceArray.length; i++) {
@@ -246,6 +252,25 @@ function doMath() {
                 }
             }
         }
+        if (rowMath===0&&colMath===-1){
+            for(var k=colPosition; k <= 7; k++) {
+                incrementCol=rowPosition+","+k
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+thisRowPosition+"] [column="+sortColArray[sortColArray.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
+                        //we are currently white toke and see if down the row is any black tokens
+                        //also the last possible spot in the array is a white position
+                        //if these conditions are true then we flip
+                        $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+
+                        // completedMatchArray.push(rowColIncrement)
+                    }
+                }
+            }
+        }
+
         if (rowMath===1&&colMath===0){
             for(var k=thisRowPosition; k >= 0; k--) {
                 rowColIncrement=k+","+colPosition
