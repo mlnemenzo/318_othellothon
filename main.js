@@ -82,13 +82,13 @@ function squareClicked(){
         thistokenColumnCoordinate=$(this).attr('column');
         thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
         $(this).addClass('revealed')
-        $(this).append('<img src="images/Back.png">')
+        $(this).append('<img src="images/mkdragonwhite.png">')
         console.log(thistokenCoordinate);
         player1Check=false;
         player2Check=true;
         // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
-        imgSrcName="images/Back.png"
+        imgSrcName="images/mkdragonwhite.png"
         legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
         //runs the function of legalmove check
         
@@ -106,12 +106,12 @@ function squareClicked(){
         thistokenColumnCoordinate=$(this).attr('column');
         thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
         $(this).addClass('revealed')
-        $(this).append('<img src="images/s-l300.jpg">')
+        $(this).append('<img src="images/mkdragonblack.png">')
         console.log(thistokenCoordinate);
         player2Check=false;
         player1Check=true;
         tokenPop.push(thistokenCoordinate);
-        imgSrcName="images/s-l300.jpg"
+        imgSrcName="images/mkdragonblack.png"
         legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
 
         doMath();
@@ -124,10 +124,10 @@ function squareClicked(){
 
 }
 function populateStartPosition(){
-    $("[row='3'] [column='3']").addClass('revealed').append('<img src="images/Back.png">');
-    $("[row='4'] [column='4']").addClass('revealed').append('<img src="images/Back.png">');
-    $("[row='3'] [column='4']").addClass('revealed').append('<img src="images/s-l300.jpg">');
-    $("[row='4'] [column='3']").addClass('revealed').append('<img src="images/s-l300.jpg">');
+    $("[row='3'] [column='3']").addClass('revealed').append('<img src="images/mkdragonblack.png">');
+    $("[row='4'] [column='4']").addClass('revealed').append('<img src="images/mkdragonblack.png"">');
+    $("[row='3'] [column='4']").addClass('revealed').append('<img src="images/mkdragonwhite.png">');
+    $("[row='4'] [column='3']").addClass('revealed').append('<img src="images/mkdragonwhite.png">');
 
 
 }
