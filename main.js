@@ -28,17 +28,17 @@ function buildGameBoard(){
     var gameBoard = $('#game-board');
     for (var newRow=0;newRow<boardSize.rows;newRow++){
         var divsToAppend;
-        divsToAppend=$("<div>").addClass("row")    
-        for(var newSquare=0;newSquare<boardSize.rows;newSquare++){       
-            var showSquare=$("<div>").addClass("square")    
+        divsToAppend=$("<div>").addClass("row")
+        for(var newSquare=0;newSquare<boardSize.rows;newSquare++){
+            var showSquare=$("<div>").addClass("square")
             if(newSquare%2===0 && newRow%2===0){
-                showSquare.addClass("light")    
+                showSquare.addClass("light")
             } else if(newSquare%2===1 && newRow%2===1){
-                showSquare.addClass("light")    
+                showSquare.addClass("light")
             } else if(newSquare%2===1 && newRow%2===0){
-                showSquare.addClass("dark")    
+                showSquare.addClass("dark")
             } else{
-                showSquare.addClass("dark")    
+                showSquare.addClass("dark")
             }
             showSquare.attr('column',newSquare)
             divsToAppend.append(showSquare)
@@ -63,7 +63,7 @@ function squareClicked(){
     if (!canBeClicked) {
         return;
     }
-legalMoveCheck();
+    legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
     if ($(this).hasClass('revealed')) {
         return;
     }
@@ -159,11 +159,11 @@ function PC_TA_Check(){
 
 
 function checkSourcePC_TA_Check (){
-    for (i=0;i<TA_PC_Matched.length-1;i++){
+    for (i=0;i<TA_PC_Matched.length;i++){
         oppositeSourceArrayValue=TA_PC_Matched[i]
         rowPosition=TA_PC_Matched[i].charAt(0)
         colPosition=TA_PC_Matched[i].charAt(2)
-        if ($("[row=rowPosition] [column=colPosition]").find('img').attr('src')!=="images/Back.png"){
+        if ($("[row="+rowPosition+"] [column="+colPosition+"]").find('img').attr('src')!=="images/Back.png"){
             oppositeSourceArray.push(oppositeSourceArrayValue)
         }
 
