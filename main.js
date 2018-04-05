@@ -31,7 +31,9 @@ var colMath;
 var rowColIncrement;
 var completedMatchArray=[];
 var sortRowArray=[];
-
+var thirdCheckPosition;
+var thirdCheckPositionRowChar;
+var innerRowColIncrement;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -241,11 +243,22 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+sortRowArray[sortRowArray.length-1].charAt(0)+"] [column="+thisColPosition+"]").find('img').attr('src')===imgSrcName) {
-                        //we are currently white toke and see if down the row is any black tokens
-                        //also the last possible spot in the array is a white position
-                        //if these conditions are true then we flip
-                        $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        
+                        //this is opposite source in the vertical direction
+                        thirdCheckPosition=rowColIncrement
+                        thirdCheckPositionRowChar=thirdCheckPosition.charAt(0)
+                        for (var l=thirdCheckPositionRowChar;l<8;l++){
+                            innerRowColIncrement=l+","+colPosition
+                            if ($("[row="+l+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(0))+1;r<=l;r++ ){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
 
                         // completedMatchArray.push(rowColIncrement)
                     }
