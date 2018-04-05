@@ -67,6 +67,8 @@
 
 .reset > button {
     background: transparent;
+    outline: darkred;
+
 }
 
 #game-board {

@@ -3,10 +3,13 @@ function initializeApp(){
     buildGameBoard();
     applyClickHandlers();
     populateStartPosition();
+    $(".gamesPlayed .value").text(gamesPlayed);
+
 
 }
 
 var grid=[];
+var gamesPlayed = 0;
 var imgSrcName;
 var tokenPop = ["3,3", "3,4", "4,4", "4,3"];
 var tokenPopCopy=[];
@@ -63,9 +66,24 @@ function buildGameBoard(){
 
 }
 
+function gameReset() {
+    $("#game-board").empty();
+    player1Check=true;
+    player2Check=false;
+    buildGameBoard();
+    populateStartPosition();
+    gamesPlayed++;
+    displayStats();
+}
+
+function displayStats() {
+    $(".gamesPlayed .value").text(gamesPlayed);
+
+}
 
 function applyClickHandlers(){
     $("#game-board").on('click',".square",squareClicked);
+    $('.reset > button').on('click', gameReset);
 }
 
 
