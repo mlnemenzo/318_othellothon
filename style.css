@@ -1,5 +1,8 @@
 
 #main_body {
+    background-image: url("images/woodbackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     box-sizing: border-box;
     height: 100vh;
@@ -52,8 +55,8 @@
     border: 1px solid black;
     box-sizing: border-box;
     display: inline-block;
-    height: 80%;
-    width: 65%;
+    height: 70%;
+    width: 50%;
 }
 
 #game-board > div {
@@ -62,22 +65,26 @@
 
 .row {
     display: flex;
-    height: 11.5%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 13.5%;
     width: 100%;
 }
 
 .square {
-    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 2px;
     height: 100%;
-    width: 8.5%;
+    width: 14%;
 }
 
 .light {
-    background-color: #e4bf7f;
+    background-color: #1b4129;
 }
 
 .dark {
-    background-color: #755c30;
+    background-color: #418246;
 }
 
 
