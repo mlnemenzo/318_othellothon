@@ -209,6 +209,7 @@ function doMath() {
     //function to check the distance of opposite source tokens comapred to what was clicked
     var InnerRowPositionCheck;
     var InnerColPositionCheck;
+
     for (i = 0; i < oppositeSourceArray.length; i++) {
         rowPosition = oppositeSourceArray[i].charAt(0);
         colPosition = oppositeSourceArray[i].charAt(2);
@@ -216,9 +217,7 @@ function doMath() {
         thisColPosition = tokenPop[tokenPop.length-1].charAt(2);
         rowMath=thisRowPosition-rowPosition;
         colMath=thisColPosition-colPosition;
-        
         if (rowMath===-1&&colMath===0){
-            tokenPop.sort()
             for(var k=rowPosition; k <= 7; k++) {
                 rowColIncrement=k+","+colPosition
                 for (var j=0;j<tokenPop.length;j++){
@@ -243,7 +242,7 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+tokenPop[0].charAt(0)+"] [column="+tokenPop[tokenPop.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+tokenPop[tokenPop.length-1].charAt(0)+"] [column="+tokenPop[tokenPop.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
                         //we are currently white toke and see if down the row is any black tokens
                         //also the last possible spot in the array is a white position
                         //if these conditions are true then we flip
