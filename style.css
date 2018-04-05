@@ -35,9 +35,10 @@
     display: inline-block;
     box-sizing: border-box;
     border: 1px solid black;
-    height: 80%;
+    height: 75%;
     width: 30%;
     position: relative;
+    vertical-align: top;
 }
 
 .statsArea > div {
@@ -52,10 +53,9 @@
 
 #game-board {
     position: relative;
-    border: 1px solid black;
     box-sizing: border-box;
     display: inline-block;
-    height: 70%;
+    height: 72%;
     width: 50%;
 }
 
@@ -64,7 +64,10 @@
 }
 
 .row {
+    margin-left: 0;
+    box-shadow: 4px 5px 5px rgba(32, 32, 32, 0.97);
     display: flex;
+    margin-right: 0;
     box-sizing: border-box;
     border: 1px solid black;
     height: 13.5%;
@@ -76,7 +79,7 @@
     border: 1px solid black;
     border-radius: 2px;
     height: 100%;
-    width: 14%;
+    width: 13.5%;
 }
 
 .light {
