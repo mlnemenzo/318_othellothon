@@ -1,38 +1,59 @@
+
+@font-face {
+    font-family: mkii;
+    src: url(fonts/mortalkombat2.ttf);
+}
+
 #main_body {
+    background-image: url("images/the_pit.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     box-sizing: border-box;
     height: 100vh;
     width: 100vw;
 }
 
+* {
+    font-family: mkii, sans-serif;
+}
+
 .title {
     position: relative;
     box-sizing: border-box;
     display: inline-block;
-    border: 1px solid black;
     margin: auto;
     text-align: center;
     width: 100%;
     height: 20%;
 }
 
-.title > div {
-    height: 50%;
-    width: 100%;
+.about {
+    top: 0;
+    left: 40%;
+    height: 20%;
+    width: 20%;
     position: relative;
     display: inline-block;
-    border: 1px solid black;
     box-sizing: border-box;
 }
 
+.logo {
+    height: 35%;
+    width: 35%;
+}
 
 .statsArea {
+    color: yellow;
+    border-radius: 2px;
+    box-shadow: 4px 5px 5px darkred;
     display: inline-block;
     box-sizing: border-box;
     border: 1px solid black;
-    height: 80%;
+    height: 60%;
     width: 30%;
     position: relative;
+    vertical-align: top;
 }
 
 .statsArea > div {
@@ -43,13 +64,17 @@
     text-align: center;
 }
 
+
+.reset > button {
+    background: transparent;
+}
+
 #game-board {
     position: relative;
-    border: 1px solid black;
     box-sizing: border-box;
     display: inline-block;
-    height: 80%;
-    width: 65%;
+    height: 66%;
+    width: 40%;
 }
 
 #game-board > div {
@@ -57,23 +82,30 @@
 }
 
 .row {
+    margin-left: 0;
+    box-shadow: 4px 5px 5px darkred;
     display: flex;
-    height: 11.5%;
+    margin-right: 0;
+    box-sizing: border-box;
+    border: 1px solid black;
+    height: 13.5%;
     width: 100%;
 }
 
 .square {
-    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 2px;
     height: 100%;
-    width: 8.5%;
+    width: 13.5%;
 }
 
 .light {
-    background-color: #e4bf7f;
+    background-color: #410007;
 }
 
 .dark {
-    background-color: #755c30;
+    background-color: #ac2827;
 }
 
 
