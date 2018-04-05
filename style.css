@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7d296afcd0d8eeff732defbee11badd43cf4652d
 #main_body {
     position: absolute;
     box-sizing: border-box;
@@ -44,21 +48,34 @@
     text-align: center;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7d296afcd0d8eeff732defbee11badd43cf4652d
 #game-board {
-    height: 500px;
-    width: 500px;
-    margin: auto;
+    position: relative;
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 80%;
+    width: 65%;
+}
+
+#game-board > div {
+
 }
 
 .row {
     display: flex;
-    height: 12.5%;
+    height: 11.5%;
+    width: 100%;
 }
 
 .square {
     display: inline-block;
     height: 100%;
-    width: 12.5%;
+    width: 8.5%;
 }
 
 .light {
@@ -70,3 +87,10 @@
 }
 
 
+<<<<<<< HEAD
+=======
+img{
+    height:100%;
+    width:100%;
+}
+>>>>>>> 7d296afcd0d8eeff732defbee11badd43cf4652d
