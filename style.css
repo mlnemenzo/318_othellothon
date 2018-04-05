@@ -1,8 +1,8 @@
+
 @font-face {
     font-family: mkii;
     src: url(fonts/mortalkombat2.ttf);
 }
-
 
 #main_body {
     background-image: url("images/the_pit.jpg");
@@ -63,6 +63,7 @@
     height: 25%;
     text-align: center;
 }
+
 
 .reset > button {
     background: transparent;
