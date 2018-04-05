@@ -23,22 +23,28 @@ var rowPosition='';
 var colPosition='';
 var oppositeSourceArray=[];
 var oppositeSourceArrayValue;
+var thisRowPosition;
+var thisColPosition;
+var rowMath;
+var colMath;
+var rowColIncrement;
+var completedMatchArray[];
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
     for (var newRow=0;newRow<boardSize.rows;newRow++){
         var divsToAppend;
-        divsToAppend=$("<div>").addClass("row")    
-        for(var newSquare=0;newSquare<boardSize.rows;newSquare++){       
-            var showSquare=$("<div>").addClass("square")    
+        divsToAppend=$("<div>").addClass("row")
+        for(var newSquare=0;newSquare<boardSize.rows;newSquare++){
+            var showSquare=$("<div>").addClass("square")
             if(newSquare%2===0 && newRow%2===0){
-                showSquare.addClass("light")    
+                showSquare.addClass("light")
             } else if(newSquare%2===1 && newRow%2===1){
-                showSquare.addClass("light")    
+                showSquare.addClass("light")
             } else if(newSquare%2===1 && newRow%2===0){
-                showSquare.addClass("dark")    
+                showSquare.addClass("dark")
             } else{
-                showSquare.addClass("dark")    
+                showSquare.addClass("dark")
             }
             showSquare.attr('column',newSquare)
             divsToAppend.append(showSquare)
@@ -63,7 +69,7 @@ function squareClicked(){
     if (!canBeClicked) {
         return;
     }
-legalMoveCheck();
+    legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
     if ($(this).hasClass('revealed')) {
         return;
     }
@@ -79,7 +85,7 @@ legalMoveCheck();
         // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
         // legalMoveCheck(thistokenRowCoordinate,thistokenColumnCoordinate);
-
+        doMath();
         return
     }
     if(player2Check===true&&player1Check===false){
@@ -95,7 +101,7 @@ legalMoveCheck();
         // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
         // legalMoveCheck(thistokenRowCoordinate,thistokenColumnCoordinate);
-
+        doMath()
         return
     }
 }
@@ -130,6 +136,7 @@ function legalMoveCheck(row,col) {
 
     PC_TA_Check();
     checkSourcePC_TA_Check();
+    doMath();
 }
 
 
@@ -159,13 +166,59 @@ function PC_TA_Check(){
 
 
 function checkSourcePC_TA_Check (){
-    for (i=0;i<TA_PC_Matched.length-1;i++){
+    for (i=0;i<TA_PC_Matched.length;i++){
         oppositeSourceArrayValue=TA_PC_Matched[i]
         rowPosition=TA_PC_Matched[i].charAt(0)
         colPosition=TA_PC_Matched[i].charAt(2)
-        if ($("[row=rowPosition] [column=colPosition]").find('img').attr('src')!=="images/Back.png"){
+        if ($("[row="+rowPosition+"] [column="+colPosition+"]").find('img').attr('src')!=="images/Back.png"){
             oppositeSourceArray.push(oppositeSourceArrayValue)
+            //add class of wrong
         }
 
     }
+
 }
+
+function doMath() {
+    tokenPopCopy=tokenPop.slice();
+    for (i = 0; i < oppositeSourceArray.length; i++) {
+        rowPosition = oppositeSourceArray[i].charAt(0);
+        colPosition = oppositeSourceArray[i].charAt(2);
+        thisRowPosition = tokenPop[tokenPop.length-1].charAt(0);
+        thisColPosition = tokenPop[tokenPop.length-1].charAt(2);
+        rowMath=thisRowPosition-rowPosition;
+        colMath=thisColPosition-colPosition;
+        if (rowMath===-1&&colMath===0){
+            for(var k=rowPosition; k <= 7; k++) {
+                rowColIncrement=k+","+colPosition
+                for (var j=tokenPopCopy.length-1;j>=0;j--){
+                    secondVar=tokenPopCopy[j];
+                    if(rowColIncrement===secondVar){
+                        tokenPopCopy.splice(j,1);
+                        completedMatchArray.push(rowColIncrement)
+                    }
+                }
+                }
+            }
+                if (thistokenCoordinate === "images/s-l300.jpg" ) {
+                    return;
+                } else {
+                    tokenPop.attr('src', ' ');
+                    tokenPop.attr('src', 'images/Back.png');
+                    console.log('check doMath');
+                }
+                // we need to increment row while checking if new position is in TP
+            }
+        }
+    }
+}
+
+for(var j=tokenPopCopy.length-1;j>=0;j--){
+    secondVar=tokenPopCopy[j];
+    if(firstVar===secondVar){
+        positionCheck.splice(i,1);
+        console.log("this is position check splice" +positionCheck)
+        tokenPopCopy.splice(j,1);
+        console.log("this is tokencopy check splice" +tokenPopCopy)
+        console.log(secondVar)
+        TA_PC_Matched.push(secondVar)
