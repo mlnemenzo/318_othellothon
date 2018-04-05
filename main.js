@@ -7,6 +7,7 @@ function initializeApp(){
 }
 
 var grid=[];
+var imgSrcName;
 var tokenPop = ["3,3", "3,4", "4,4", "4,3"];
 var tokenPopCopy=[];
 var thistokenCoordinate;
@@ -28,7 +29,9 @@ var thisColPosition;
 var rowMath;
 var colMath;
 var rowColIncrement;
-var completedMatchArray[];
+var completedMatchArray=[];
+
+
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -69,7 +72,6 @@ function squareClicked(){
     if (!canBeClicked) {
         return;
     }
-    legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
     if ($(this).hasClass('revealed')) {
         return;
     }
@@ -84,8 +86,13 @@ function squareClicked(){
         player2Check=true;
         // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
-        // legalMoveCheck(thistokenRowCoordinate,thistokenColumnCoordinate);
+        legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
+        //runs the function of legalmove check
+        
         doMath();
+        //runs the doMath function
+        flipCards()
+        //runs the flip chard function
         return
     }
     if(player2Check===true&&player1Check===false){
@@ -97,11 +104,11 @@ function squareClicked(){
         console.log(thistokenCoordinate);
         player2Check=false;
         player1Check=true;
-        // $("#game-board").off('click',".square",squareClicked);
-        // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
-        // legalMoveCheck(thistokenRowCoordinate,thistokenColumnCoordinate);
-        doMath()
+        legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
+
+        legalMoveCheck(thistokenRowCoordinate,thistokenColumnCoordinate);
+        doMath();
         return
     }
 }
@@ -136,7 +143,6 @@ function legalMoveCheck(row,col) {
 
     PC_TA_Check();
     checkSourcePC_TA_Check();
-    doMath();
 }
 
 
@@ -171,6 +177,7 @@ function checkSourcePC_TA_Check (){
         rowPosition=TA_PC_Matched[i].charAt(0)
         colPosition=TA_PC_Matched[i].charAt(2)
         if ($("[row="+rowPosition+"] [column="+colPosition+"]").find('img').attr('src')!=="images/Back.png"){
+            $("[row="+rowPosition+"] [column="+colPosition+"]").addClass('flip')
             oppositeSourceArray.push(oppositeSourceArrayValue)
             //add class of wrong
         }
@@ -180,7 +187,9 @@ function checkSourcePC_TA_Check (){
 }
 
 function doMath() {
-    tokenPopCopy=tokenPop.slice();
+    var InnerRowPositionCheck;
+    var InnerColPositionCheck;
+
     for (i = 0; i < oppositeSourceArray.length; i++) {
         rowPosition = oppositeSourceArray[i].charAt(0);
         colPosition = oppositeSourceArray[i].charAt(2);
@@ -191,34 +200,46 @@ function doMath() {
         if (rowMath===-1&&colMath===0){
             for(var k=rowPosition; k <= 7; k++) {
                 rowColIncrement=k+","+colPosition
-                for (var j=tokenPopCopy.length-1;j>=0;j--){
-                    secondVar=tokenPopCopy[j];
-                    if(rowColIncrement===secondVar){
-                        tokenPopCopy.splice(j,1);
-                        completedMatchArray.push(rowColIncrement)
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')==="images/s-l300.jpg" && $("[row="+tokenPop[tokenPop.length-1].charAt(0)+"] [column="+tokenPop[tokenPop.length-1].charAt(2)+"]").find('img').attr('src')==='images/Back.png') {
+                        //we are currently white toke and see if down the row is any black tokens
+                        //also the last possible spot in the array is a white position
+                        //if these conditions are true then we flip
+                        $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+
+                        // completedMatchArray.push(rowColIncrement)
                     }
                 }
-                }
-            }
-                if (thistokenCoordinate === "images/s-l300.jpg" ) {
-                    return;
-                } else {
-                    tokenPop.attr('src', ' ');
-                    tokenPop.attr('src', 'images/Back.png');
-                    console.log('check doMath');
-                }
-                // we need to increment row while checking if new position is in TP
             }
         }
+               
+                // we need to increment row while checking if new position is in TP
     }
 }
+    
+function flipCards(){
+        $('.flip').find('img').attr('src', ' ');
+        $('.flip').find('img').attr('src', 'images/Back.png');
+        // $('.square').removeClass('flip')
+    }
 
-for(var j=tokenPopCopy.length-1;j>=0;j--){
-    secondVar=tokenPopCopy[j];
-    if(firstVar===secondVar){
-        positionCheck.splice(i,1);
-        console.log("this is position check splice" +positionCheck)
-        tokenPopCopy.splice(j,1);
-        console.log("this is tokencopy check splice" +tokenPopCopy)
-        console.log(secondVar)
-        TA_PC_Matched.push(secondVar)
+
+// if (thistokenCoordinate === "images/s-l300.jpg" ) {
+//     return;
+// } else {
+//     tokenPop.attr('src', ' ');
+//     tokenPop.attr('src', 'images/Back.png');
+//     console.log('check doMath');
+// }
+
+
+// if (thistokenCoordinate === "images/s-l300.jpg" ) {
+//     return;
+// } else {
+//     tokenPop.attr('src', ' ');
+//     tokenPop.attr('src', 'images/Back.png');
+//     console.log('check doMath');
+// }
