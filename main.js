@@ -41,6 +41,7 @@ var AddParsedColPosition;
 var InnerParsedRowPosition;
 var InnerParsedColPosition;
 var parsedColPosition;
+var oppositel=0;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -389,6 +390,38 @@ function doMath() {
                 }
             }
         }
+
+        if (rowMath===1&&colMath===-1){
+            for(var k=parseInt(colPosition); k >= 0; k--) {
+                parsedRowPosition=parseInt(rowPosition);
+                parsedColPosition=parseInt(colPosition);
+
+                incrementCol=parsedRowPosition+","+parsedColPosition
+                //maybe change to thisCol
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        for (var l=parseInt(tokenPop[j].charAt(0));l>=0;l--){  
+                            var InnerParsedRowPosition=parseInt(tokenPop[j].charAt(0))-l;
+                            oppositel=l*-1;
+                            var InnerParsedColPosition=parseInt(tokenPop[j].charAt(2))-oppositel;
+                            innerRowColIncrement=InnerParsedRowPosition+","+InnerParsedColPosition
+                            if ($("[row="+InnerParsedRowPosition+"] [column="+InnerParsedColPosition+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(0))-1;r<=l;r--){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
 
         if (rowMath===1&&colMath===0){
