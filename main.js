@@ -37,6 +37,14 @@ var sortRowArray=[];
 var thirdCheckPosition;
 var thirdCheckPositionRowChar;
 var innerRowColIncrement;
+var thirdCheckPositionColChar;
+var parsedRowPosition;
+var AddParsedRowPosition;
+var AddParsedColPosition;
+var InnerParsedRowPosition;
+var InnerParsedColPosition;
+var parsedColPosition;
+var oppositel=0;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -114,7 +122,8 @@ function squareClicked(){
         
         doMath();
         //runs the doMath function
-        flipCards()
+        flipCards();
+        countToken();
         //runs the flip chard function
         oppositeSourceArray=[]
         TA_PC_Matched=[]
@@ -135,7 +144,8 @@ function squareClicked(){
         legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
 
         doMath();
-        flipCards()
+        flipCards();
+        countToken()
         oppositeSourceArray=[]
         TA_PC_Matched=[]
         positionCheck=[]
@@ -261,8 +271,7 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
-                        
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) { 
                         //this is opposite source in the vertical direction
                         thirdCheckPosition=rowColIncrement
                         thirdCheckPositionRowChar=thirdCheckPosition.charAt(0)
@@ -290,17 +299,148 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+thisRowPosition+"] [column="+sortColArray[sortColArray.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
-                        //we are currently white toke and see if down the row is any black tokens
-                        //also the last possible spot in the array is a white position
-                        //if these conditions are true then we flip
-                        $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").addClass('flip')
-
-                        // completedMatchArray.push(rowColIncrement)
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        //&& $("[row="+thisRowPosition+"] [column="+sortColArray[sortColArray.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName
+                        thirdCheckPosition=incrementCol
+                        thirdCheckPositionColChar=thirdCheckPosition.charAt(2)
+                        for (var l=thirdCheckPositionColChar;l<8;l++){
+                            innerRowColIncrement=rowPosition+","+l
+                            if ($("[row="+InnerRowPositionCheck+"] [column="+l+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(2))+1;r<=l;r++ ){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+InnerRowPositionCheck+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+        if (rowMath===0&&colMath===1){
+            for(var k=colPosition; k >= 0; k--) {
+                incrementCol=rowPosition+","+k
+                //maybe change to thisCol
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        //&& $("[row="+thisRowPosition+"] [column="+sortColArray[sortColArray.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName
+                        thirdCheckPosition=incrementCol
+                        thirdCheckPositionColChar=thirdCheckPosition.charAt(2)
+                        for (var l=thirdCheckPositionColChar;l>=0;l--){
+                            innerRowColIncrement=rowPosition+","+l
+                            if ($("[row="+InnerRowPositionCheck+"] [column="+l+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(2))+1;r>=l;r--){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+InnerRowPositionCheck+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (rowMath===-1&&colMath===-1){
+            for(var k=parseInt(colPosition); k <= 7; k++) {
+                parsedRowPosition=parseInt(rowPosition);
+                parsedColPosition=parseInt(colPosition);
+                AddParsedRowPosition=parsedRowPosition
+                AddParsedColPosition=parsedRowPosition
+                incrementCol=AddParsedRowPosition+","+AddParsedColPosition
+                //maybe change to thisCol
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        for (var l=parseInt(tokenPop[j].charAt(0));l<8;l++){  
+                            var InnerParsedRowPosition=parseInt(tokenPop[j].charAt(0))+l;
+                            var InnerParsedColPosition=parseInt(tokenPop[j].charAt(2))+l;
+                            innerRowColIncrement=InnerParsedRowPosition+","+InnerParsedColPosition
+                            if ($("[row="+InnerParsedRowPosition+"] [column="+InnerParsedColPosition+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(2))+1;r<=l;r++){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if (rowMath===1&&colMath===1){
+            for(var k=parseInt(colPosition); k >= 0; k--) {
+                parsedRowPosition=parseInt(rowPosition);
+                parsedColPosition=parseInt(colPosition);
+                AddParsedRowPosition=parsedRowPosition
+                AddParsedColPosition=parsedRowPosition
+                incrementCol=AddParsedRowPosition+","+AddParsedColPosition
+                //maybe change to thisCol
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        for (var l=parseInt(tokenPop[j].charAt(0));l>=0;l--){  
+                            var InnerParsedRowPosition=parseInt(tokenPop[j].charAt(0))-l;
+                            var InnerParsedColPosition=parseInt(tokenPop[j].charAt(2))-l;
+                            innerRowColIncrement=InnerParsedRowPosition+","+InnerParsedColPosition
+                            if ($("[row="+InnerParsedRowPosition+"] [column="+InnerParsedColPosition+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(2))-1;r>=l;r--){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (rowMath===1&&colMath===-1){
+            for(var k=parseInt(colPosition); k >= 0; k--) {
+                parsedRowPosition=parseInt(rowPosition);
+                parsedColPosition=parseInt(colPosition);
+
+                incrementCol=parsedRowPosition+","+parsedColPosition
+                //maybe change to thisCol
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        for (var l=parseInt(tokenPop[j].charAt(0));l>=0;l--){  
+                            var InnerParsedRowPosition=parseInt(tokenPop[j].charAt(0))-l;
+                            oppositel=l*-1;
+                            var InnerParsedColPosition=parseInt(tokenPop[j].charAt(2))-oppositel;
+                            innerRowColIncrement=InnerParsedRowPosition+","+InnerParsedColPosition
+                            if ($("[row="+InnerParsedRowPosition+"] [column="+InnerParsedColPosition+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(0))-1;r<=l;r--){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+r+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         if (rowMath===1&&colMath===0){
             for(var k=thisRowPosition; k >= 0; k--) {
@@ -309,12 +449,21 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+sortRowArray[0].charAt(0)+"] [column="+thisColPosition+"]").find('img').attr('src')===imgSrcName) {
-                        //we are currently white toke and see if down the row is any black tokens
-                        //also the last possible spot in the array is a white position
-                        //if these conditions are true then we flip
-                        $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").addClass('flip')
-
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        thirdCheckPosition=rowColIncrement
+                        thirdCheckPositionRowChar=thirdCheckPosition.charAt(0)
+                        for (var l=thirdCheckPositionRowChar;l>=0;l--){
+                            innerRowColIncrement=l+","+colPosition
+                            if ($("[row="+l+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the FIRST token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(0))-1;r>=l;r-- ){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+                        
                         // completedMatchArray.push(rowColIncrement)
                     }
                 }
@@ -332,3 +481,26 @@ function flipCards(){
 
     }
 
+function countToken(){
+    var checkRowCounter;
+    var checkColCounter;
+    var countArrayBlack=[];
+    var countArrayWhite=[];
+    var scorePlayer1=0;
+    var scorePlayer2=0;
+    for (var i=0; i<tokenPop.length;i++){
+        checkRowCounter=tokenPop[i].charAt(0);
+        checkColCounter=tokenPop[i].charAt(2);
+        if($("[row="+checkRowCounter+"] [column="+checkColCounter+"]").find('img').attr('src')==="images/mkdragonblack.png"){
+            countArrayBlack.push(tokenPop[i])
+        }
+        else{
+            countArrayWhite.push(tokenPop[i])
+        }
+    }
+    scorePlayer2=countArrayBlack.length
+    scorePlayer1=countArrayWhite.length
+    $('.scoreP1 .value').text(scorePlayer1);
+    $('.scoreP2 .value').text(scorePlayer2);
+   
+}

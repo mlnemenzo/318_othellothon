@@ -30,8 +30,10 @@ var rowMath;
 var colMath;
 var rowColIncrement;
 var completedMatchArray=[];
-
-
+var sortRowArray=[];
+var thirdCheckPosition;
+var thirdCheckPositionRowChar;
+var innerRowColIncrement;
 function buildGameBoard(){
     var boardSize = { rows: 8, squares: 8 };
     var gameBoard = $('#game-board');
@@ -82,13 +84,13 @@ function squareClicked(){
         thistokenColumnCoordinate=$(this).attr('column');
         thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
         $(this).addClass('revealed')
-        $(this).append('<img src="images/Back.png">')
+        $(this).append('<img src="images/mkdragonwhite.png">')
         console.log(thistokenCoordinate);
         player1Check=false;
         player2Check=true;
         // canBeClicked=false
         tokenPop.push(thistokenCoordinate);
-        imgSrcName="images/Back.png"
+        imgSrcName="images/mkdragonwhite.png"
         legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
         //runs the function of legalmove check
         
@@ -106,12 +108,12 @@ function squareClicked(){
         thistokenColumnCoordinate=$(this).attr('column');
         thistokenCoordinate=thistokenRowCoordinate+','+thistokenColumnCoordinate;
         $(this).addClass('revealed')
-        $(this).append('<img src="images/s-l300.jpg">')
+        $(this).append('<img src="images/mkdragonblack.png">')
         console.log(thistokenCoordinate);
         player2Check=false;
         player1Check=true;
         tokenPop.push(thistokenCoordinate);
-        imgSrcName="images/s-l300.jpg"
+        imgSrcName="images/mkdragonblack.png"
         legalMoveCheck(parseInt($(this).parent().attr('row')),parseInt($(this).attr('column')));
 
         doMath();
@@ -124,10 +126,10 @@ function squareClicked(){
 
 }
 function populateStartPosition(){
-    $("[row='3'] [column='3']").addClass('revealed').append('<img src="images/Back.png">');
-    $("[row='4'] [column='4']").addClass('revealed').append('<img src="images/Back.png">');
-    $("[row='3'] [column='4']").addClass('revealed').append('<img src="images/s-l300.jpg">');
-    $("[row='4'] [column='3']").addClass('revealed').append('<img src="images/s-l300.jpg">');
+    $("[row='3'] [column='3']").addClass('revealed').append('<img src="images/mkdragonblack.png">');
+    $("[row='4'] [column='4']").addClass('revealed').append('<img src="images/mkdragonblack.png"">');
+    $("[row='3'] [column='4']").addClass('revealed').append('<img src="images/mkdragonwhite.png">');
+    $("[row='4'] [column='3']").addClass('revealed').append('<img src="images/mkdragonwhite.png">');
 
 
 }
@@ -209,14 +211,31 @@ function doMath() {
     //function to check the distance of opposite source tokens comapred to what was clicked
     var InnerRowPositionCheck;
     var InnerColPositionCheck;
+    sortRowArray=[];
+    sortColArray=[];
+    var incrementCol='';
 
+    for (var p=0; p<tokenPop.length;p++){
+        InnerRowPositionCheck=tokenPop[p].charAt(0);
+        InnerColPositionCheck=tokenPop[p].charAt(2);
+        if(InnerColPositionCheck===thistokenCoordinate.charAt(2)){
+            sortRowArray.push(tokenPop[p])
+            sortRowArray.sort()
+        }else if(InnerRowPositionCheck===thistokenCoordinate.charAt(0)){
+            sortColArray.push(tokenPop[p])
+            sortColArray.sort()
+        }
+    }
     for (i = 0; i < oppositeSourceArray.length; i++) {
         rowPosition = oppositeSourceArray[i].charAt(0);
         colPosition = oppositeSourceArray[i].charAt(2);
-        thisRowPosition = tokenPop[tokenPop.length-1].charAt(0);
-        thisColPosition = tokenPop[tokenPop.length-1].charAt(2);
+        thisRowPosition = thistokenCoordinate.charAt(0);
+        thisColPosition = thistokenCoordinate.charAt(2);
         rowMath=thisRowPosition-rowPosition;
         colMath=thisColPosition-colPosition;
+        tokenPop.sort()
+        
+
         if (rowMath===-1&&colMath===0){
             for(var k=rowPosition; k <= 7; k++) {
                 rowColIncrement=k+","+colPosition
@@ -224,7 +243,36 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+tokenPop[tokenPop.length-1].charAt(0)+"] [column="+tokenPop[tokenPop.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName) {
+                        
+                        //this is opposite source in the vertical direction
+                        thirdCheckPosition=rowColIncrement
+                        thirdCheckPositionRowChar=thirdCheckPosition.charAt(0)
+                        for (var l=thirdCheckPositionRowChar;l<8;l++){
+                            innerRowColIncrement=l+","+colPosition
+                            if ($("[row="+l+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')===imgSrcName){
+                                //IF opposite source direction we encouter opposite source -which is THIS source L is the last token 
+                                for(var r=parseInt(thistokenCoordinate.charAt(0))+1;r<=l;r++ ){
+                                //then add cody's code and in the for function just addclass flip.
+                                $("[row="+r+"] [column="+InnerColPositionCheck+"]").addClass('flip')
+                                // break;
+                                }
+                            }
+                        }
+
+                        // completedMatchArray.push(rowColIncrement)
+                    }
+                }
+            }
+        }
+        if (rowMath===0&&colMath===-1){
+            for(var k=colPosition; k <= 7; k++) {
+                incrementCol=rowPosition+","+k
+                for (var j=0;j<tokenPop.length;j++){
+                    tokenPop[j];
+                    InnerRowPositionCheck=tokenPop[j].charAt(0);
+                    InnerColPositionCheck=tokenPop[j].charAt(2);
+                    if(incrementCol===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+thisRowPosition+"] [column="+sortColArray[sortColArray.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
                         //we are currently white toke and see if down the row is any black tokens
                         //also the last possible spot in the array is a white position
                         //if these conditions are true then we flip
@@ -235,6 +283,7 @@ function doMath() {
                 }
             }
         }
+
         if (rowMath===1&&colMath===0){
             for(var k=thisRowPosition; k >= 0; k--) {
                 rowColIncrement=k+","+colPosition
@@ -242,7 +291,7 @@ function doMath() {
                     tokenPop[j];
                     InnerRowPositionCheck=tokenPop[j].charAt(0);
                     InnerColPositionCheck=tokenPop[j].charAt(2);
-                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+tokenPop[tokenPop.length-1].charAt(0)+"] [column="+tokenPop[tokenPop.length-1].charAt(2)+"]").find('img').attr('src')===imgSrcName) {
+                    if(rowColIncrement===tokenPop[j] && $("[row="+InnerRowPositionCheck+"] [column="+InnerColPositionCheck+"]").find('img').attr('src')!==imgSrcName && $("[row="+sortRowArray[0].charAt(0)+"] [column="+thisColPosition+"]").find('img').attr('src')===imgSrcName) {
                         //we are currently white toke and see if down the row is any black tokens
                         //also the last possible spot in the array is a white position
                         //if these conditions are true then we flip
